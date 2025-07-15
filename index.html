@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Chart</title>
+  </head>
+  <body>
+    <div class="container">
+      <section class="chart">
+        <h2 class="chart__title">Динамика рынка</h2>
+        <div class="canvas-wrapper">
+          <canvas id="chart-1"></canvas>
+        </div>
+        <div class="chart__legend">
+          <div class="chart__legend-item">
+            <div class="chart__legend-img" id="chl-1"></div>
+            <span class="chart__legend-text">объем продаж</span>
+          </div>
+          <div class="chart__legend-item">
+            <div class="chart__legend-img" id="chl-2"></div>
+            <span class="chart__legend-text">объем продаж</span>
+          </div>
+          <div class="chart__legend-item">
+            <div class="chart__legend-img" id="chl-3"></div>
+            <span class="chart__legend-text">объем продаж</span>
+          </div>
+          <div class="chart__legend-item">
+            <div class="chart__legend-img" id="chl-4"></div>
+            <span class="chart__legend-text">объем продаж</span>
+          </div>
+        </div>
+      </section>
+      <section class="chart chart_single">
+        <h2 class="chart__title">Индекс цен на лекарственные препараты</h2>
+        <div class="canvas-wrapper-2">
+          <canvas id="chart-2"></canvas>
+        </div>
+      </section>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
