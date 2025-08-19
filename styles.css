@@ -76,7 +76,7 @@ a {
     max-width: 1920px;
     margin: 0 auto;
     width: 100%;
-    padding: 0 80px;
+    padding: 40px 80px;
 }
 
 .canvas-wrapper {
@@ -166,7 +166,7 @@ a {
 }
 
 .chart_single {
-    margin-top: 40px;
+    margin-top: 80px;
     border: none;
 }
 

@@ -21,21 +21,63 @@ const gridSingleChartColor = style.getPropertyValue('--Grid-single-chart-color')
 const canvas = document.querySelector('#chart-1');
 const ctx = canvas.getContext('2d');
 
+const chart1Data = {
+    data1: {
+        'неделя 42': 50000,
+        'неделя 44': 45000,
+        'неделя 45': 30000,
+        'неделя 46': 25000,
+        'неделя 43': 38000,
+        'неделя 47': 30000,
+        'неделя 48': 35000,
+        'неделя 49': 40000,
+        'неделя 50': 25000,
+    },
+    data2: {
+        'неделя 42': 45000,
+        'неделя 44': 35000,
+        'неделя 45': 45000,
+        'неделя 46': 50000,
+        'неделя 43': 32000,
+        'неделя 47': 25000,
+        'неделя 48': 30000,
+        'неделя 49': 28000,
+        'неделя 53': 36000,
+    },
+    data3: {
+        'неделя 42': 50,
+        'неделя 44': 100,
+        'неделя 45': 50,
+        'неделя 46': 70,
+        'неделя 43': 100,
+        'неделя 47': 60,
+        'неделя 48': 70,
+        'неделя 49': 100,
+        'неделя 50': 90,
+    },
+    data4: {
+        'неделя 40': 50,
+        'неделя 44': 100,
+        'неделя 45': 80,
+        'неделя 46': 100,
+        'неделя 43': 100,
+        'неделя 47': 50,
+        'неделя 48': 100,
+        'неделя 49': 70,
+        'неделя 50': 100,
+    }
+};
+
 const w = document.querySelector('.canvas-wrapper').getBoundingClientRect().width;
 const h = 600;
 
-function initCanvas(canvas) {
-
-    canvas.setAttribute('width', w);
-    canvas.setAttribute('height', h);
-
+// Функция для инициализации и перерисовки первого графика
+function renderChart1() {
+    initCanvas(canvas, w, h);
+    drawChart(50, chart1Data.data1, chart1Data.data2, chart1Data.data3, chart1Data.data4, ctx);
 }
 
-initCanvas(canvas);
-
-window.addEventListener('resize', () => {
-    initCanvas(canvas);
-})
+renderChart1();
 
 function drawChart(scaleY, data1, data2, data3, data4, ctx) {
 
@@ -240,51 +282,6 @@ function drawChart(scaleY, data1, data2, data3, data4, ctx) {
     }
 }
 
-drawChart(50, {
-    'неделя 42': 50000,
-    'неделя 44': 45000,
-    'неделя 45': 30000,
-    'неделя 46': 25000,
-    'неделя 43': 38000,
-    'неделя 47': 30000,
-    'неделя 48': 35000,
-    'неделя 49': 40000,
-    'неделя 50': 25000,
-},
-    {
-        'неделя 42': 45000,
-        'неделя 44': 35000,
-        'неделя 45': 45000,
-        'неделя 46': 50000,
-        'неделя 43': 32000,
-        'неделя 47': 25000,
-        'неделя 48': 30000,
-        'неделя 49': 28000,
-        'неделя 53': 36000,
-    },
-    {
-        'неделя 42': 50,
-        'неделя 44': 100,
-        'неделя 45': 50,
-        'неделя 46': 70,
-        'неделя 43': 100,
-        'неделя 47': 60,
-        'неделя 48': 70,
-        'неделя 49': 100,
-        'неделя 50': 90,
-    },
-    {
-        'неделя 40': 50,
-        'неделя 44': 100,
-        'неделя 45': 80,
-        'неделя 46': 100,
-        'неделя 43': 100,
-        'неделя 47': 50,
-        'неделя 48': 100,
-        'неделя 49': 70,
-        'неделя 50': 100,
-    }, ctx);
-
 // получение данных, заменить url на нужный
 // из полученных данных нужно получить данные для отрисовки диаграмм
 // data1, data2, data3, data4: {'неделя№': значение}
@@ -312,21 +309,39 @@ function processData(data) {
 const canvasSingle = document.querySelector('#chart-2');
 const ctx2 = canvasSingle.getContext('2d');
 
+const chart2Data = {
+    "неделя 48'24": '2.7%',
+    "неделя 49'24": '6.9%',
+    "неделя 50'24": '7.3%',
+    "неделя 51'24": '7.7%',
+    "неделя 52'24": '5.3%',
+    "неделя 53'24": '8.7%',
+    "неделя 1'25": '9.3%',
+    "неделя 2'25": '9.7%',
+    "неделя 3'25": '10.5%',
+    "неделя 4'25": '9.5%',
+    "неделя 5'25": '8.5%',
+    "неделя 6'25": '9.5%',
+    "неделя 7'25": '7.5%',
+    "неделя 8'25": '10.5%',
+    "неделя 9'25": '9.5%',
+    "неделя 10'25": '7.5%',
+};
+
 const w2 = document.querySelector('.canvas-wrapper-2').getBoundingClientRect().width;
 const h2 = 400;
 
-function initCanvas2(canvas) {
-
-    canvas.setAttribute('width', w2);
-    canvas.setAttribute('height', h2);
-
+function renderChart2() {
+    initCanvas(canvasSingle, w2, h2);
+    drawSingleChart(50, chart2Data, ctx2);
 }
 
-initCanvas2(canvasSingle);
+renderChart2();
 
-window.addEventListener('resize', () => {
-    initCanvas(canvasSingle);
-})
+function initCanvas(canvasElement, width, height) {
+    canvasElement.setAttribute('width', width);
+    canvasElement.setAttribute('height', height);
+}
 
 function drawSingleChart(scaleY, data, ctx) {
 
@@ -480,21 +495,15 @@ function drawSingleChart(scaleY, data, ctx) {
     }
 }
 
-drawSingleChart(50, {
-    "неделя 48'24": '2.7%',
-    "неделя 49'24": '6.9%',
-    "неделя 50'24": '7.3%',
-    "неделя 51'24": '7.7%',
-    "неделя 52'24": '5.3%',
-    "неделя 53'24": '8.7%',
-    "неделя 1'25": '9.3%',
-    "неделя 2'25": '9.7%',
-    "неделя 3'25": '10.5%',
-    "неделя 4'25": '9.5%',
-    "неделя 5'25": '8.5%',
-    "неделя 6'25": '9.5%',
-    "неделя 7'25": '7.5%',
-    "неделя 8'25": '10.5%',
-    "неделя 9'25": '9.5%',
-    "неделя 10'25": '7.5%',
-}, ctx2);
+let resizeTimeout;
+
+function debouncedResize() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        renderChart1();
+        renderChart2();
+        location.reload(true);
+    }, 50);
+}
+
+window.addEventListener('resize', debouncedResize);
