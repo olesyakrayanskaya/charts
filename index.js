@@ -16,6 +16,13 @@ const strokeBarChartColor = style.getPropertyValue('--Stroke-bar-chart-color');
 const gridColor = style.getPropertyValue('--Grid-color');
 const gridSingleChartColor = style.getPropertyValue('--Grid-single-chart-color');
 
+// breakpoints
+
+const tablBp = 768;
+const mobBp = 600;
+
+const windowWidth = window.innerWidth;
+
 // первый тип графика
 
 const canvas = document.querySelector('#chart-1');
@@ -23,6 +30,7 @@ const ctx = canvas.getContext('2d');
 
 const chart1Data = {
     data1: {
+        'неделя 40': 38000,
         'неделя 42': 50000,
         'неделя 44': 45000,
         'неделя 45': 30000,
@@ -34,6 +42,7 @@ const chart1Data = {
         'неделя 50': 25000,
     },
     data2: {
+        'неделя 40': 42000,
         'неделя 42': 45000,
         'неделя 44': 35000,
         'неделя 45': 45000,
@@ -45,6 +54,7 @@ const chart1Data = {
         'неделя 53': 36000,
     },
     data3: {
+        'неделя 40': 35,
         'неделя 42': 50,
         'неделя 44': 100,
         'неделя 45': 50,
@@ -56,7 +66,8 @@ const chart1Data = {
         'неделя 50': 90,
     },
     data4: {
-        'неделя 40': 50,
+        'неделя 40': 40,
+        'неделя 42': 30,
         'неделя 44': 100,
         'неделя 45': 80,
         'неделя 46': 100,
@@ -68,7 +79,7 @@ const chart1Data = {
     }
 };
 
-const w = document.querySelector('.canvas-wrapper').getBoundingClientRect().width;
+const w = document.querySelector('.canvas-wrapper').getBoundingClientRect().width * 0.99;
 const h = 600;
 
 // Функция для инициализации и перерисовки первого графика
@@ -159,13 +170,13 @@ function drawChart(scaleY, data1, data2, data3, data4, ctx) {
         let axisYValueL = ((y0 - i) * valueMultL).toLocaleString('ru-RU');
         let axisYValueR = ((y0 - i) * valueMultR).toLocaleString('ru-RU');
 
-        const shiftXL = 30;
+        const shiftXL = 25;
         const shiftYL = 1;
         ctx.moveTo(x0, i);
         if ((y0 - i) >= 0 && (y0 - i) < h - scaleY) {
             ctx.fillText(axisYValueL, x0 - shiftXL, i + shiftYL);
         }
-        const shiftXR = 20;
+        const shiftXR = 25;
         const shiftYR = 1;
         ctx.moveTo(w, i);
         if ((y0 - i) >= 0 && (y0 - i) < h - scaleY) {
@@ -251,7 +262,12 @@ function drawChart(scaleY, data1, data2, data3, data4, ctx) {
     const barColor = firstBarChartColor;
     const barStrokeColor2 = strokeBarChartColor;
     const barColor2 = secondBarChartColor;
-    const barWidth = 15;
+    let barWidth;
+    if (windowWidth > mobBp) {
+        barWidth = 15;
+    } else {
+        barWidth = 5;
+    }
 
     for (let i = 0; i < xValues.length; i++) {
         let xCord = scaleX * i + paddingLR + scaleX / 2;
@@ -328,7 +344,7 @@ const chart2Data = {
     "неделя 10'25": '7.5%',
 };
 
-const w2 = document.querySelector('.canvas-wrapper-2').getBoundingClientRect().width;
+const w2 = document.querySelector('.canvas-wrapper-2').getBoundingClientRect().width * 0.99;
 const h2 = 400;
 
 function renderChart2() {
@@ -347,7 +363,7 @@ function drawSingleChart(scaleY, data, ctx) {
 
     ctx.clearRect(0, 0, w2, h2);
 
-    const paddingLR = 30;
+    const paddingLR = 55;
     const xValues = Array.from(Object.keys({ ...data }));
     const scaleX = Math.ceil((w2 - paddingLR * 2) / xValues.length) + 0.5;
 
@@ -371,7 +387,7 @@ function drawSingleChart(scaleY, data, ctx) {
     // Рисуем Оx:
 
     ctx.moveTo(x0, y0);
-    ctx.lineTo(w2 - paddingLR / 2, y0);
+    ctx.lineTo(w2, y0);
     ctx.stroke();
     ctx.closePath();
 
@@ -380,15 +396,23 @@ function drawSingleChart(scaleY, data, ctx) {
     // Ox
 
     for (let i = 0; i < xValues.length; i++) {
-        const shiftY = 20;
+        const shiftY = 30;
         const textX = x0 + i * scaleX + scaleX / 2;
         const textY = h2 - shiftY;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.save();
         ctx.translate(textX, textY);
-        ctx.rotate(-Math.PI / 8);
-        ctx.fillText(xValues[i], 0, 0);
+        if (windowWidth <= tablBp) {
+            ctx.rotate(-Math.PI / 4);
+        } else {
+            ctx.rotate(-Math.PI / 8);
+        }
+        if (windowWidth <= tablBp) {
+            ctx.fillText(xValues[i].replace('еля', ''), 0, 0);
+        } else {
+            ctx.fillText(xValues[i], 0, 0);
+        }
         ctx.restore();
         ctx.moveTo(x0 + i * scaleX, h2);
     }
@@ -487,11 +511,15 @@ function drawSingleChart(scaleY, data, ctx) {
     ctx.font = 'normal 16px serif';
     ctx.fillStyle = pointSingleStrokeLineChartColor;
 
-    for (let i = 0; i < xValues.length; i++) {
-        let xCord = scaleX * i + paddingLR + scaleX / 2;
-        let yCord = y0 - (yValues[i] * pixelPerValue);
-        ctx.moveTo(xCord, yCord - 20);
-        ctx.fillText(parseFloat(data[xValues[i]]) + '%', xCord, yCord - 20);
+    if (windowWidth >= mobBp) {
+
+        for (let i = 0; i < xValues.length; i++) {
+            let xCord = scaleX * i + paddingLR + scaleX;
+            let yCord = y0 - (yValues[i] * pixelPerValue);
+            ctx.moveTo(xCord, yCord - 20);
+            ctx.fillText(parseFloat(data[xValues[i]]) + '%', xCord, yCord - 20);
+        }
+
     }
 }
 

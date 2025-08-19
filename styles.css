@@ -1,14 +1,14 @@
 :root {
-    --First-line-chart-color: #0A9971;
-    --Second-line-chart-color: #f7f372;
+    --First-line-chart-color: #0c0a99;
+    --Second-line-chart-color: #c03ab9;
     --Point-line-chart-color: #f8f8f3;
     --Point-stroke-line-chart-color: #0D0D0D;
-    --First-bar-chart-color: #9af8c4;
+    --First-bar-chart-color: #6d80eb;
     --Second-bar-chart-color: #c5c6ca;
     --Stroke-bar-chart-color: #444343;
     --Grid-color: #807f7d;
     --Grid-single-chart-color: #bebfbd;
-    --Point-single-line-chart-color: #0CB485;
+    --Point-single-line-chart-color: #cacace;
     --Point-stroke-single-line-chart-color: #2e2e2d;
 }
 
@@ -79,6 +79,12 @@ a {
     padding: 40px 80px;
 }
 
+@media (max-width: 600px) {
+    .container {
+        padding: 10px 20px;
+    }
+}
+
 .canvas-wrapper {
     max-width: 1880px;
     margin: 10px auto;
@@ -99,6 +105,12 @@ a {
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .chart__legend {
+        flex-wrap: wrap;
+    }
 }
 
 .chart__legend-item {
@@ -166,10 +178,5 @@ a {
 }
 
 .chart_single {
-    margin-top: 80px;
-    border: none;
-}
-
-.chart_single .chart__title {
-    color: rgba(13, 13, 13, 0.40);
+    margin-top: 80px;    
 }
